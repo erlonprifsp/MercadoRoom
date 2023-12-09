@@ -14,7 +14,13 @@ import androidx.room.RoomDatabase
 // version = 1 -> define a versão do banco de dados (número deve ser incrementado sempre que houver alterações no esquema do banco de dados)
 abstract class ProdutoDatabase: RoomDatabase() {
     abstract fun produtoDAO(): ProdutoDAO // método abstrato que retorna um objeto ProdutoDAO
-        // usado para acessar os métodos definidos na interface ProdutoDAO
+    // este método é responsável por disponibilizar a instância do DAO ProdutoDAO para interações com o banco de dados
+    // através dos métodos definidos na interface ProdutoDAO
+
+    // a função abstrata produtoDAO não contém a implementação
+    // a responsabilidade da implementação concreta é do Room a qual fornece uma instância válida do ProdutoDAO
+    // a classe gerada automaticamente pelo Room incorpora toda a lógica necessária para fornecer o DAO apropriado
+    //  para executar operações no banco de dados, como: inserções, atualizações, consultas e exclusões
 
     companion object { // define um objeto companion object que permite a criação de funções e propriedades estáticas associadas à classe ProdutoDatabase
         // método estático pode ser chamado diretamente a partir da classe, sem precisar criar uma instância (objeto) daquela classe
