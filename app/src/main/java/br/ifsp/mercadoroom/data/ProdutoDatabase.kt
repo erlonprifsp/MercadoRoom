@@ -17,6 +17,7 @@ abstract class ProdutoDatabase: RoomDatabase() {
 
         fun getDatabase(context: Context): ProdutoDatabase {
             return INSTANCE ?: synchronized(this) {
+                // inicializa e obtêm uma instância do banco de dados
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ProdutoDatabase::class.java,
