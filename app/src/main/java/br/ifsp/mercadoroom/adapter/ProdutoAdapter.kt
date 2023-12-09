@@ -96,12 +96,11 @@ class ProdutoAdapter(val produtosLista:ArrayList<Produto>): RecyclerView.Adapter
 
             // implementação do método publishResults do Filter
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
-                // publica os resultados do filtro na lista de produtos
-                produtosListaFilterable = p1?.values as ArrayList<Produto>
-                // notifica o RecyclerView sobre as mudanças
-                notifyDataSetChanged()
+                    // publica os resultados do filtro na lista de produtos
+                    produtosListaFilterable = p1?.values as ArrayList<Produto>
+                    // notifica o RecyclerView sobre as mudanças
+                    notifyDataSetChanged()
             }
-
         }
     }
 
