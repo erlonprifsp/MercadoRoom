@@ -20,6 +20,10 @@ interface ProdutoDAO { // interfaces marcadas com @Dao no Room contêm métodos 
     fun inserirProduto(produto: Produto) // declaração do inserirProduto que usa a anotação @Insert
     // este método insere um objeto Produto no banco de dados
 
+    // suspend fun inserirProduto(produto: Produto)
+    // anotação @Insert do Room não é compatível com suspend
+    // Room entende que métodos anotados com @Insert sejam métodos síncronos
+
     @Update // anotação usada para indicar o método de atualização de dados no banco de dados
     suspend fun atualizarProduto (produto: Produto) // declaração do método atualizarProduto que usa a anotação @Update
     // este método atualiza um objeto Produto no banco de dados
