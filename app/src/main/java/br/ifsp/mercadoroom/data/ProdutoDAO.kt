@@ -6,8 +6,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+// DAO contém os métodos que acessam o banco de dados
+
 @Dao
 interface ProdutoDAO {
+
+    // aqui são definidas as consultas SQL
     @Insert
     fun inserirProduto(produto: Produto)
 
