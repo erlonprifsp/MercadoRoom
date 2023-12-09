@@ -34,15 +34,19 @@ class MainActivity : AppCompatActivity() { // declaração da classe MainActivit
         val navController = navHostFragment.navController // obtém o controlador de navegação (NavController) do NavHostFragment
         // NavController gerencia a navegação entre diferentes destinos (fragmentos) da aplicação
 
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        appBarConfiguration = AppBarConfiguration(navController.graph) // cria uma configuração da barra de aplicativos com base no grafo de navegação (NavGraph) associado ao NavController
+        setupActionBarWithNavController(navController, appBarConfiguration) // configura a barra de aplicativos (ActionBar) para usar a navegação com base no NavController e na appBarConfiguration
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragmentContainerView)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+    // sobrescrita do método onSupportNavigateUp
+    override fun onSupportNavigateUp(): Boolean { // chamado quando o botão "Up" da barra de aplicativos é pressionado
+        // obtém o NavController associado ao NavHostFragment utilizando a função findNavController
+        val navController = findNavController(R.id.fragmentContainerView) // útil para lidar com a navegação ao pressionar o botão "Up"
+
+        return navController.navigateUp(appBarConfiguration) // trata a ação do botão "Up" na barra de aplicativos permitindo que o controlador de navegação (NavController) decida como lidar com essa ação com base na configuração da barra de aplicativos (appBarConfiguration)
+                || super.onSupportNavigateUp() // retorna true se a navegação foi tratada com sucesso e false caso contrário
+                // Se a navegação não for tratada, a superclasse AppCompatActivity será chamada para lidar com a ação padrão do botão "Up"
     }
 
 }
