@@ -74,9 +74,11 @@ class ProdutoAdapter(val produtosLista:ArrayList<Produto>): RecyclerView.Adapter
         fun onItemClick(pos: Int)
     }
 
-    override fun getFilter(): Filter {
+    // método para aplicar um filtro na lista de produtos
+    override fun getFilter(): Filter { // permite filtrar os itens com base em um critério especificado
         return object : Filter(){
-            override fun performFiltering(p0: CharSequence?): FilterResults {
+            override fun performFiltering(p0: CharSequence?): FilterResults { // implementação do método performFiltering do Filter
+                // usado para realizar o filtro na lista de produtos com base no texto de pesquisa fornecido
                 if (p0.toString().isEmpty())
                     produtosListaFilterable = produtosLista
                 else
@@ -92,8 +94,11 @@ class ProdutoAdapter(val produtosLista:ArrayList<Produto>): RecyclerView.Adapter
                 return filterResults
             }
 
+            // implementação do método publishResults do Filter
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+                // publica os resultados do filtro na lista de produtos
                 produtosListaFilterable = p1?.values as ArrayList<Produto>
+                // notifica o RecyclerView sobre as mudanças
                 notifyDataSetChanged()
             }
 
