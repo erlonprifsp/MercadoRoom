@@ -30,8 +30,9 @@ class MainActivity : AppCompatActivity() { // declaração da classe MainActivit
 
         setSupportActionBar(binding.toolbar) // define a Toolbar do layout como a barra de suporte da activity permitindo a personalização da barra de ferramentas
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment // define o NavHostFragment (fragmento de navegação) no layout da atividade usando o supportFragmentManager
+        val navController = navHostFragment.navController // obtém o controlador de navegação (NavController) do NavHostFragment
+        // NavController gerencia a navegação entre diferentes destinos (fragmentos) da aplicação
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
