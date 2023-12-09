@@ -17,14 +17,19 @@ abstract class ProdutoDatabase: RoomDatabase() {
         // usado para acessar os métodos definidos na interface ProdutoDAO
 
     companion object { // define um objeto companion object que permite a criação de funções e propriedades estáticas associadas à classe ProdutoDatabase
+        // método estático pode ser chamado diretamente a partir da classe, sem precisar criar uma instância (objeto) daquela classe
+        // podem ser chamados diretamente através do nome da classe
         @Volatile // anotação que indica que o valor da variável INSTANCE pode ser alterado por diferentes threads em um ambiente concorrente
         private var INSTANCE: ProdutoDatabase? = null // declaração de uma variável privada que armazena a instância do banco de dados -> é inicializada como nula
 
-        fun getDatabase(context: Context): ProdutoDatabase { // método estático que retorna uma instância do banco de dados ProdutoDatabase
+        fun getDatabase(context: Context): ProdutoDatabase { // método estático (associado ao objeto companion) que retorna uma instância do banco de dados ProdutoDatabase
             // Usa o padrão Singleton para garantir que apenas uma instância do banco de dados seja criada durante o ciclo de vida do aplicativo
+            // e fornece um ponto global de acesso a essa instância
             return INSTANCE ?: synchronized(this) { // Utiliza o operador Elvis (?:) para retornar a instância existente do banco de dados, se não for nula
                 // caso seja nula, cria uma nova instância de banco de dados dentro de um bloco synchronized
-                // isso garante que apenas uma thread por vez possa criar uma nova instância do banco de dados
+                // esse bloco sincronizado garante que apenas uma thread por vez possa criar uma nova instância do banco de dados
+
+                // bloco sincronizado
 
                 // inicializa e obtêm uma instância do banco de dados
                 val instance = Room.databaseBuilder( // método utilizado para criar o banco de dados
@@ -35,6 +40,10 @@ abstract class ProdutoDatabase: RoomDatabase() {
                 INSTANCE = instance // atribui a instância do banco de dados recém-criada à variável INSTANCE
                 instance // retorna a instância do banco de dados criada
             }
+
+            // implementação garante que ao chamar ProdutoDatabase.getDatabase(context), o método retornará sempre a mesma instância do banco de dados se já existir
+            // caso contrário, criará uma nova instância
+            // isso mantém a consistência do Singleton, garantindo que apenas uma instância do banco de dados seja utilizada
         }
     }
 }
