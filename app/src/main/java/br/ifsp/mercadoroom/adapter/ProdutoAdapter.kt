@@ -62,12 +62,13 @@ class ProdutoAdapter(val produtosLista:ArrayList<Produto>): RecyclerView.Adapter
         // define ouvinte de clique
         init {
             view.root.setOnClickListener {
-                listener?.onItemClick(adapterPosition)
+                listener?.onItemClick(adapterPosition) // implementa a interface ProdutoListener
             }
         }
 
     }
 
+    // interface que define um método onItemClick para lidar com eventos de clique em um item da lista
     interface ProdutoListener
     {
         fun onItemClick(pos: Int)
