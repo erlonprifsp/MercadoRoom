@@ -92,30 +92,37 @@ class ListaProdutosFragment : Fragment(){ // representa um fragmento na UI do ap
         updateUI() // cChama o método updateUI() para atualizar a interface com a lista de produtos
     }
 
-    // método responsável por atualizar a interface com a lista de produtos
+    // método que atualiza a interface com a lista de produtos
+    // recuperada do banco de dados e exibida em um RecyclerView
     private fun updateUI()
     {
         // acessa o banco de dados utilizando coroutines
-        val db = ProdutoDatabase.getDatabase(requireActivity().applicationContext)
+        val db = ProdutoDatabase.getDatabase(requireActivity().applicationContext) // obtém uma instância do banco de dados ProdutoDatabase usando o contexto da atividade atual (requireActivity().applicationContext)
         // obtêm a lista de produtos
-        var produtosLista : ArrayList<Produto>
+        var produtosLista : ArrayList<Produto> // declara variável para armazenar a lista de produtos que será recuperada do banco de dados
 
-        val recyclerView = binding.recyclerview
+        val recyclerView = binding.recyclerview // acessa o RecyclerView por meio do binding (vinculação de layout)
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(requireContext()) // define um LinearLayoutManager como gerenciador de layout para o RecyclerView
 
+        // inicia uma nova coroutine no contexto Dispatchers.IO para realizar operações assíncronas
         CoroutineScope(Dispatchers.IO).launch {
-            produtosLista = db.produtoDAO().listarProdutos() as ArrayList<Produto>
-            produtoAdapter = ProdutoAdapter(produtosLista)
+            // acessa o produtoDAO do banco de dados para buscar a lista de produtos
+            produtosLista = db.produtoDAO().listarProdutos() as ArrayList<Produto> //  dados são acessados de maneira assíncrona dentro da coroutine
+            // cria um Adapter
+            produtoAdapter = ProdutoAdapter(produtosLista) // adaptador ProdutoAdapter usa a lista de produtos recuperada do banco de dados
 
-
+            // volta para o contexto principal (UI thread) para atualizar a interface do usuário
+            // após a conclusão da operação assíncrona
             withContext(Dispatchers.Main) {
-                // configurar o adaptador ProdutoAdapter
-                recyclerView.adapter = produtoAdapter
+                // configurar o adaptador ProdutoAdapter para exibir os dados na interface
+                recyclerView.adapter = produtoAdapter // criado anteriormente no RecyclerView
 
                 // define um OnClickListener para os itens da lista para navegar até a tela de detalhes ao clicar em um produto
-                val listener = object : ProdutoAdapter.ProdutoListener {
+                val listener = object : ProdutoAdapter.ProdutoListener { // cria um Listener para os itens do ProdutoAdapter
 
+                    // responde ao clique em um item da lista
                     override fun onItemClick(pos: Int) {
                         val c = produtoAdapter.produtosListaFilterable[pos]
 
@@ -131,9 +138,7 @@ class ListaProdutosFragment : Fragment(){ // representa um fragmento na UI do ap
 
                     }
                 }
-                produtoAdapter.setClickListener(listener)
-
-
+                produtoAdapter.setClickListener(listener) // define o Listener criado no Adapter para lidar com os cliques nos itens da lista
             }
         }
 
